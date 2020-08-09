@@ -1,4 +1,4 @@
-# tauri-app
+# jap-words (Work in Progress)
 
 ## Project setup
 ```
