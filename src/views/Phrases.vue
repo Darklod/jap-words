@@ -5,9 +5,6 @@
         <v-col cols="12" v-for="w in words" :key="w.text">
           <Item :word="w" />
         </v-col>
-        <v-col cols="12" v-for="w in words" :key="w.text">
-          <Item :word="w" />
-        </v-col>
       </v-row>
     <v-fab-transition>
       <v-btn dark bottom right large rounded class="fab accent">
