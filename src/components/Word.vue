@@ -5,7 +5,7 @@
         <v-col>
             <v-sheet class="d-flex ml-4 my-2" :color="familiarityColor" width="4" height="70px"/>
         </v-col>
-        <v-col cols="7">
+        <v-col cols="6">
             <v-card-title>
                 {{word.text}}
             </v-card-title>
@@ -13,7 +13,7 @@
                 {{word.translation}}
             </v-card-subtitle>
         </v-col>
-        <v-col cols="4" class="right-end mr-4 my-3"  align-self="stretch"> 
+        <v-col cols="5" class="right-end mr-4 my-3"  align-self="stretch"> 
             <div class="level px-2">N{{word.jlpt}}</div>
             <div class="word-actions">
                 <v-btn class="ma-1" tile large color="black" icon>
