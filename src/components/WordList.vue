@@ -1,0 +1,25 @@
+<template>
+    <div class="wordlist">
+        <Word v-for="word in words" :key="word.text" :word="word" />
+    </div>
+</template>
+
+<script>
+import Word from '@/components/Word'
+export default {
+    name:"WordList",
+    props: ["words"],
+    components: {
+        Word,
+    },
+}
+</script>
+
+<style>
+.wordlist {
+    height: 550px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-bottom: 50px;
+}
+</style>
