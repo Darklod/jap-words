@@ -22,3 +22,5 @@ yarn-error.log*
 
 #Tauri build output
 /dist_tauri
+
+/src/db.js

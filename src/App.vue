@@ -21,11 +21,11 @@
       />
     </v-app-bar>
 
-    <v-content class="main">
+    <v-main class="main">
       <v-container fluid>
         <router-view />
       </v-container>
-    </v-content>
+    </v-main>
   </v-app>
 </template>
 
@@ -45,5 +45,6 @@ html::-webkit-scrollbar {
   background-image: url("/koi.jpg");
   background-repeat: repeat-y;
   background-size: cover;
+  background-attachment: fixed;
 }
 </style>
