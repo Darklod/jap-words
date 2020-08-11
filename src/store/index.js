@@ -1,14 +1,14 @@
-import Vue from 'vue';
-import Vuex from 'vuex';
+import Vue from 'vue'
+import Vuex from 'vuex'
 
 import { vuexfireMutations } from 'vuexfire'
 import { firestoreAction } from 'vuexfire'
 
 import { db, Timestamp } from '../db'
 
-Vue.use(Vuex);
+Vue.use(Vuex)
 
-const wordCollection = db.collection('words');
+const wordCollection = db.collection('words')
 
 export default new Vuex.Store({
     state: {
@@ -42,4 +42,4 @@ export default new Vuex.Store({
         }),
         // ...
     },
-});
+})

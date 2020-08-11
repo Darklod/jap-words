@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-card class="mx-auto" max-width="640" @contextmenu="show">
+    <div @contextmenu="show">
       <v-card-title class="headline pb-0">
         <Header :word="word" />
       </v-card-title>
@@ -15,7 +15,9 @@
           :translation="p.translation"
         />
       </v-card-text>
-    </v-card>
+
+      <v-divider v-if="!isLast" class="mx-4" />
+    </div>
     <v-menu
       origin="center center"
       transition="scale-transition"
@@ -34,11 +36,11 @@
 </template>
 
 <script>
-import Phrase from "./Phrase";
-import Header from "./Header";
+import Phrase from "./Phrase"
+import Header from "./Header"
 
 export default {
-  props: ["word"],
+  props: ["word", "isLast"],
   components: {
     Phrase,
     Header,
@@ -49,34 +51,34 @@ export default {
       x: 0,
       y: 0,
       items: [{ title: "Edit" }, { title: "Delete" }],
-    };
+    }
   },
   methods: {
     show(e) {
-      e.preventDefault();
-      this.showMenu = false;
-      this.x = e.clientX;
-      this.y = e.clientY;
+      e.preventDefault()
+      this.showMenu = false
+      this.x = e.clientX
+      this.y = e.clientY
       this.$nextTick(() => {
-        this.showMenu = true;
-      });
+        this.showMenu = true
+      })
     },
     click() {
-      console.log("ciao");
+      console.log("ciao")
     }
   },
   computed: {
     familiarityColor() {
       switch (this.word.familiarity) {
         case 3:
-          return "#2f74b5";
+          return "#2f74b5"
         case 2:
-          return "#ffc000";
+          return "#ffc000"
         case 1:
         default:
-          return "#92d050";
+          return "#92d050"
       }
     },
   },
-};
+}
 </script>

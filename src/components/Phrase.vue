@@ -1,14 +1,14 @@
 <template>
   <div class="text--primary">
     {{text}}
-    <br/>
+    <br />
     {{translation}}
   </div>
 </template>
 
 <script>
 export default {
-    name: "Phrase",
-    props: ["text", "translation"],
-};
+  name: "Phrase",
+  props: ["text", "translation"],
+}
 </script>

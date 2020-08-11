@@ -1,5 +1,5 @@
 <template>
-    <div class="wordlist">
+    <div class="">
         <Word v-for="word in words" :key="word.text" :word="word" />
     </div>
 </template>

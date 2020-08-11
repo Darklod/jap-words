@@ -20,26 +20,26 @@ export default {
   computed: {
     // TODO: conviene salvarlo già così
     rubyText() {
-      const regex = /(.*?)\((.*?)\)_?/gim;
-      let result = [];
+      const regex = /(.*?)\((.*?)\)_?/gim
+      let result = []
 
-      let m;
+      let m
       while ((m = regex.exec(this.word.text)) !== null) {
         // This is necessary to avoid infinite loops with zero-width matches
         if (m.index === regex.lastIndex) {
-          regex.lastIndex++;
+          regex.lastIndex++
         }
 
-        let kanji = m[1];
-        let furigana = m[2];
+        let kanji = m[1]
+        let furigana = m[2]
 
-        result.push({ kanji, furigana });
+        result.push({ kanji, furigana })
       }
 
-      return result;
+      return result
     },
   },
-};
+}
 </script>
 
 <style scoped>

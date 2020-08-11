@@ -20,7 +20,8 @@ yarn-error.log*
 *.sln
 *.sw?
 
-#Tauri build output
+# Tauri build output
 /dist_tauri
 
-/src/db.js
+# Config files
+/src/config

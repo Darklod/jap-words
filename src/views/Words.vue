@@ -1,128 +1,41 @@
 <template>
-    <v-row>
-        <v-col cols="6">
-            <WordForm />
-        </v-col>
-        <v-col cols="6">
-            <WordList :words="words"/>
-        </v-col>
-        <v-fab-transition>
-          <v-btn dark bottom right large rounded class="fab accent">
-            <v-icon left>mdi-filter</v-icon>Filter
-          </v-btn>
-      </v-fab-transition>
-    </v-row>
+  <v-container>
+    <v-card flat>
+      <WordItem
+        v-for="(w, i) in words"
+        :key="w.id"
+        :isLast="i == words.length-1"
+        :word="w"
+      />
+    </v-card>
+    <v-fab-transition>
+      <v-btn dark bottom right large rounded class="fab accent">
+        <v-icon left>mdi-filter</v-icon>Filter
+      </v-btn>
+    </v-fab-transition>
+  </v-container>
 </template>
 
 <script>
-import WordList from '@/components/WordList'
-import WordForm from '@/components/WordForm'
+//import WordList from "@/components/WordList"
+//import WordForm from "@/components/WordForm"
+import WordItem from "@/components/WordItem"
+import { mapState, mapActions } from 'vuex'
+
 export default {
   components: {
-    WordList,
-    WordForm
+    WordItem,
+  //  WordList,
+   // WordForm,
   },
-  data() {
-    return {
-      words: [
-        {
-          text: "海(かい)_外(がい)",
-          translation: "Oltremare, Estero",
-          jlpt: 3,
-          familiarity: 3,
-          phrases: [
-            {
-              text: "彼は海外生活をしている。",
-              translation: "Lui vive all'estero.",
-            },
-            {
-              text: "母は俺が海外に行くのは許した。",
-              translation: "Mia mamma mi ha permesso di andare all'estero.",
-            },
-          ],
-        },
-        {
-          text: "注(ちゅう)_意(い)",
-          translation: "Attenzione",
-          jlpt: 4,
-          familiarity: 2,
-          phrases: [
-            {
-              text: "落下物に注意！",
-              translation: "Attenzione agli oggetti che cadono!",
-            },
-            {
-              text: "壁の地図を注意して見なさい。",
-              translation: "Guarda la mappa sul muro attentamente.",
-            },
-          ],
-        },
-        {
-          text: "海(かい)_外(がい)",
-          translation: "Oltremare, Estero",
-          jlpt: 3,
-          familiarity: 3,
-          phrases: [
-            {
-              text: "彼は海外生活をしている。",
-              translation: "Lui vive all'estero.",
-            },
-            {
-              text: "母は俺が海外に行くのは許した。",
-              translation: "Mia mamma mi ha permesso di andare all'estero.",
-            },
-          ],
-        },
-        {
-          text: "注(ちゅう)_意(い)",
-          translation: "Attenzione",
-          jlpt: 4,
-          familiarity: 2,
-          phrases: [
-            {
-              text: "落下物に注意！",
-              translation: "Attenzione agli oggetti che cadono!",
-            },
-            {
-              text: "壁の地図を注意して見なさい。",
-              translation: "Guarda la mappa sul muro attentamente.",
-            },
-          ],
-        },
-        {
-          text: "海(かい)_外(がい)",
-          translation: "Oltremare, Estero",
-          jlpt: 3,
-          familiarity: 3,
-          phrases: [
-            {
-              text: "彼は海外生活をしている。",
-              translation: "Lui vive all'estero.",
-            },
-            {
-              text: "母は俺が海外に行くのは許した。",
-              translation: "Mia mamma mi ha permesso di andare all'estero.",
-            },
-          ],
-        },
-        {
-          text: "注(ちゅう)_意(い)",
-          translation: "Attenzione",
-          jlpt: 4,
-          familiarity: 2,
-          phrases: [
-            {
-              text: "落下物に注意！",
-              translation: "Attenzione agli oggetti che cadono!",
-            },
-            {
-              text: "壁の地図を注意して見なさい。",
-              translation: "Guarda la mappa sul muro attentamente.",
-            },
-          ],
-        },
-      ],
-    }
+  computed: {
+    ...mapState(["words"])
+  },
+  methods: {
+    ...mapActions(["loadWords"])
+  },
+  created() {
+    this.loadWords()
   }
 }
 </script>
