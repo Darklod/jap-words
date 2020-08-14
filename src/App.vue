@@ -1,27 +1,8 @@
 <template>
   <v-app>
-    <v-app-bar app dark class="primary">
-      <v-btn text to="/words" exact>Words</v-btn>
-      <v-btn text to="/phrases" exact>Phrases</v-btn>
-      <v-btn text to="/kanji" exact>Kanji</v-btn>
-      <v-btn text to="/reviews" exact>Reviews</v-btn>
-      <v-btn text to="/stats" exact>Stats</v-btn>
+    <Navbar />
 
-      <v-spacer />
-
-      <v-text-field
-        flat
-        solo-inverted
-        hide-details
-        prepend-inner-icon="mdi-magnify"
-        label="Search"
-        class="rounded-xl"
-        dense
-        dark
-      />
-    </v-app-bar>
-
-    <v-main class="main">
+    <v-main id="background">
       <v-container fluid>
         <router-view />
       </v-container>
@@ -30,8 +11,25 @@
 </template>
 
 <script>
+import Navbar from "@/components/Navbar";
+import { mapActions, mapState } from 'vuex';
+
 export default {
   name: "App",
+  components: { Navbar },
+  computed: {
+    ...mapState(["words"]),
+  },
+  methods: {
+    ...mapActions(["bindWordsRef", "unbindWordsRef", "loadWords"])
+  },
+  created() {
+    this.bindWordsRef()
+    this.loadWords(this.words)
+  },
+  beforeDestroy() {
+    this.unbindWordsRef()
+  },
 }
 </script>
 
@@ -40,11 +38,16 @@ html::-webkit-scrollbar {
   display: none;
 }
 
-.main {
-  background-color: #add8e6;
-  background-image: url("/koi.jpg");
+#background {
+  background-color: #00d0ffe0;
+  background-image: url("/koi.webp");
   background-repeat: repeat-y;
   background-size: cover;
   background-attachment: fixed;
+  background-blend-mode: difference;
+}
+
+label.theme--dark.v-label {
+  color: rgb(255 255 255 / 0.95);
 }
 </style>

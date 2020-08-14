@@ -12,15 +12,11 @@
 </template>
 
 <script>
-import { mapState } from "vuex"
+import { mapGetters } from "vuex"
 
 export default {
-  name: "SideBar",
   computed: {
-    ...mapState(["words"]),
-    withoutPhrases() {
-      return this.words.filter((w) => !w.phrases)
-    },
+    ...mapGetters(["words/wordsWithoutPhrases"]),
   },
 }
 </script>

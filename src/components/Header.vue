@@ -9,13 +9,12 @@
         <rb>・{{word.translation}}</rb>
       </ruby>
     </div>
-    <div class="level px-2">N{{word.jlpt}}</div>
+    <div class="level accent px-2 rounded-lg">N{{word.jlpt}}</div>
   </div>
 </template>
 
 <script>
 export default {
-  name: "Header",
   props: ["word"],
   computed: {
     // TODO: conviene salvarlo già così
@@ -59,7 +58,7 @@ rt {
 }
 
 .level {
-  background-color: #0cb14e;
+  /*background-color: #258246;*/
   color: white;
   font-size: 70%;
 }

@@ -36,25 +36,18 @@
 </template>
 
 <script>
-import Item from "@/components/Item"
-//import SideBar from "@/components/SideBar"
-
-import { mapState, mapActions } from "vuex"
+import Item from "@/views/phrases/Item";
+import { mapActions, mapGetters } from "vuex";
 
 export default {
-  name: "Phrases",
   components: {
     Item,
-    // SideBar,
   },
   computed: {
-    ...mapState(["words"]),
-    wordsWithPhrases() {
-      return this.words.filter((w) => w.phrases && w.phrases.length > 0)
-    },
+    ...mapGetters(["wordsWithPhrases"]),
   },
   methods: {
-    ...mapActions(["loadWords", "addWord"]),
+    ...mapActions(["addWord"]),
     async add() {
       let a = {
         text: "海(かい)_外(がい)",
@@ -71,7 +64,7 @@ export default {
             translation: "Mia mamma mi ha permesso di andare all'estero.",
           },
         ],
-      }
+      };
       let b = {
         text: "注(ちゅう)_意(い)",
         translation: "Attenzione",
@@ -87,16 +80,13 @@ export default {
             translation: "Guarda la mappa sul muro attentamente.",
           },
         ],
-      }
+      };
 
-      await this.addWord(a)
-      await this.addWord(b)
+      await this.addWord(a);
+      await this.addWord(b);
     },
   },
-  created() {
-    this.loadWords()
-  },
-}
+};
 </script>
 
 <style scoped>

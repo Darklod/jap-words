@@ -8,7 +8,6 @@
 
 <script>
 export default {
-  name: "Phrase",
   props: ["text", "translation"],
 }
 </script>

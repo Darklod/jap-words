@@ -36,8 +36,8 @@
 </template>
 
 <script>
-import Phrase from "./Phrase"
-import Header from "./Header"
+import Phrase from "@/views/phrases/Phrase"
+import Header from "@/components/Header"
 
 export default {
   props: ["word", "isLast"],
