@@ -36,19 +36,24 @@ import moment from 'moment'
 export function orderWords(order, words) {
     const orderedList = [...words]
 
-    if (order === 'createdAt') {
-        orderedList.sort(function (a, b) {
-            const unixA = moment(a.createdAt).unix()
-            const unixB = moment(b.createdAt).unix()
-            return unixA < unixB ? -1 : 1
-        })
+    let mode = order.mode == "asc" ? -1 : 1;
+
+    let compareFn;
+    if (order.field === 'createdAt') {
+        compareFn = (a, b) => {
+            const unixA = moment(a.createdAt.toDate()).unix()
+            const unixB = moment(b.createdAt.toDate()).unix()
+            return (unixA < unixB ? -1 : 1) * mode
+        }
+    } else if (order.field === 'jlpt') {
+        compareFn = (a, b) => (a.jlpt > b.jlpt ? -1 : 1) * mode
     } else {
-        orderedList.sort(function (a, b) {
-            const nameA = a[order] ? a[order].toLowerCase() : 'zzz'
-            const nameB = b[order] ? b[order].toLowerCase() : 'zzz'
-            return nameA < nameB ? -1 : 1
-        })
+        compareFn = (a, b) => {
+            return (a[order.field] > b[order.field] ? -1 : 1) * mode
+        }
     }
+
+    orderedList.sort(compareFn)
 
     return orderedList
 }

@@ -5,8 +5,9 @@
     prepend-inner-icon="mdi-magnify"
     label="Search"
     type="search"
-    class="rounded-xl"
+    class="rounded-lg"
     clearable
+    dense
     :value="search"
     @input="handleSearch"
   />

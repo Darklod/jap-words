@@ -1,24 +1,41 @@
 <template>
-  <div class>
-    <Word v-for="word in words" :key="word.text" :word="word" />
+  <div>
+    <v-container fill-height id="empty-list" v-if="words.length == 0">
+      <v-layout align-center justify-center>
+        <h2 class="text-center accent--text">NO WORDS FOUND</h2>
+      </v-layout>
+    </v-container>
+
+    <WordItem v-for="word in words" :key="word.id" :word="word" />
+
+    <div class="text-center">
+      <v-pagination v-model="page" total-visible="6" :length="3"></v-pagination>
+    </div>
   </div>
 </template>
 
 <script>
-import Word from "@/views/words/Word";
+import WordItem from "@/views/words/WordItem";
+import { mapState } from "vuex";
+
 export default {
-  props: ["words"],
+  name: "WordList",
   components: {
-    Word,
+    WordItem,
+  },
+  data() {
+    return {
+      page: 1,
+    };
+  },
+  computed: {
+    ...mapState({ words: (state) => state.filteredWords }),
   },
 };
 </script>
 
 <style>
-.wordlist {
-  height: 550px;
-  overflow-y: auto;
-  overflow-x: hidden;
-  padding-bottom: 50px;
+#empty-list {
+  height: 200px;
 }
 </style>

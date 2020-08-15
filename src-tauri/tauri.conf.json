@@ -38,7 +38,7 @@
     "window": {
       "title": "Jap Words",
       "width": 800,
-      "height": 600,
+      "height": 480,
       "resizable": true,
       "fullscreen": false
     },

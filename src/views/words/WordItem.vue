@@ -1,5 +1,11 @@
 <template>
-  <v-alert border="left" colored-border :color="familiarityColor" elevation="4" class="rounded-lg">
+  <v-alert
+    class="rounded-lg pl-6"
+    elevation="4"
+    border="left"
+    colored-border
+    :color="familiarityColor"
+  >
     <v-card-title class="headline pa-0">
       <Header :word="word" />
     </v-card-title>
@@ -27,6 +33,3 @@ export default {
   },
 };
 </script>
-
-<style>
-</style>
