@@ -3,13 +3,25 @@ export function filterWords(filter, words) {
 
     // Filter familiarity
     if (filter.familiarity !== 'all') {
-        const filtered = filteredList.filter(w => w.familiarity === filter.familiarity)
+        let filterMethod;
+        if (Array.isArray(filter.familiarity))
+            filterMethod = w => filter.familiarity.includes(w.familiarity)
+        else
+            filterMethod = w => w.familiarity === filter.familiarity
+
+        const filtered = filteredList.filter(filterMethod)
         filteredList = filtered
     }
 
     // Filter jlpt
     if (filter.jlpt !== 'all') {
-        const filtered = filteredList.filter(w => w.jlpt === filter.jlpt)
+        let filterMethod;
+        if (Array.isArray(filter.jlpt))
+            filterMethod = w => filter.jlpt.includes(w.jlpt)
+        else
+            filterMethod = w => w.jlpt === filter.jlpt
+
+        const filtered = filteredList.filter(filterMethod)
         filteredList = filtered
     }
 
@@ -38,22 +50,17 @@ export function orderWords(order, words) {
 
     let mode = order.mode == "asc" ? -1 : 1;
 
-    let compareFn;
     if (order.field === 'createdAt') {
-        compareFn = (a, b) => {
+        orderedList.sort((a, b) => {
             const unixA = moment(a.createdAt.toDate()).unix()
             const unixB = moment(b.createdAt.toDate()).unix()
             return (unixA < unixB ? -1 : 1) * mode
-        }
-    } else if (order.field === 'jlpt') {
-        compareFn = (a, b) => (a.jlpt > b.jlpt ? -1 : 1) * mode
+        })
     } else {
-        compareFn = (a, b) => {
+        orderedList.sort((a, b) => {
             return (a[order.field] > b[order.field] ? -1 : 1) * mode
-        }
+        })
     }
-
-    orderedList.sort(compareFn)
 
     return orderedList
 }

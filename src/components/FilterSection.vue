@@ -4,6 +4,7 @@
       <v-chip-group
         v-model="familiarity"
         class="pb-0 justify-center"
+        multiple
         @change="handleFamiliarityFilter"
       >
         <v-chip class="rounded-lg">Learned</v-chip>
@@ -16,6 +17,7 @@
         v-model="jlpt"
         active-class="red white--text"
         class="pt-0"
+        multiple
         @change="handleJLPTFilter"
       >
         <v-chip class="rounded-lg">N5</v-chip>
@@ -33,23 +35,23 @@ import { mapActions } from "vuex";
 export default {
   name: "FilterSection",
   data: () => ({
-    familiarity: undefined,
-    jlpt: undefined,
+    familiarity: [],
+    jlpt: [],
   }),
   methods: {
     ...mapActions(["filterFamiliarity", "filterJLPT"]),
     handleFamiliarityFilter() {
-      if (this.familiarity === undefined) {
+      if (this.familiarity && this.familiarity.length === 0) {
         this.filterFamiliarity("all");
       } else {
-        this.filterFamiliarity(this.familiarity + 1);
+        this.filterFamiliarity(this.familiarity.map(x => x + 1));
       }
     },
     handleJLPTFilter() {
-      if (this.jlpt === undefined) {
+      if (this.jlpt && this.jlpt.length === 0) {
         this.filterJLPT("all");
       } else {
-        this.filterJLPT(5 - this.jlpt);
+        this.filterJLPT(this.jlpt.map(x => 5 - x));
       }
     },
   },
