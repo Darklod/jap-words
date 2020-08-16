@@ -4,7 +4,6 @@
       <v-chip-group
         v-model="familiarity"
         class="pb-0 justify-center"
-        multiple
         @change="handleFamiliarityFilter"
       >
         <v-chip class="rounded-lg">Learned</v-chip>
@@ -31,28 +30,35 @@
 </template>
 
 <script>
+import { EventBus } from "@/event-bus.js";
 import { mapActions } from "vuex";
+
 export default {
   name: "FilterSection",
   data: () => ({
-    familiarity: [],
+    familiarity: undefined,
     jlpt: [],
   }),
   methods: {
     ...mapActions(["filterFamiliarity", "filterJLPT"]),
     handleFamiliarityFilter() {
-      if (this.familiarity && this.familiarity.length === 0) {
+      if (this.familiarity === undefined) {
         this.filterFamiliarity("all");
       } else {
-        this.filterFamiliarity(this.familiarity.map(x => x + 1));
+        this.filterFamiliarity(this.familiarity + 1);
       }
+      this.resetPages();
     },
     handleJLPTFilter() {
       if (this.jlpt && this.jlpt.length === 0) {
         this.filterJLPT("all");
       } else {
-        this.filterJLPT(this.jlpt.map(x => 5 - x));
+        this.filterJLPT(this.jlpt.map((x) => 5 - x));
       }
+      this.resetPages();
+    },
+    resetPages() {
+      EventBus.$emit("resetPages");
     },
   },
 };

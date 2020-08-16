@@ -8,7 +8,7 @@
   >
     <div class="d-flex justify-space-between align-center">
       <div class="word">
-        <FuriganaText :word="word" class="d-inline-block" />
+        <FuriganaText :text="word.text" class="d-inline-block" />
         <ruby>
           <rb>・{{word.translation}}</rb>
         </ruby>

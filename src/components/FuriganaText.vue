@@ -10,7 +10,7 @@
 <script>
 export default {
   name: "FuriganaText",
-  props: ["word"],
+  props: ["text"],
   computed: {
     // TODO: conviene salvarlo già così
     rubyText() {
@@ -18,7 +18,7 @@ export default {
       let result = [];
 
       let m;
-      while ((m = regex.exec(this.word.text)) !== null) {
+      while ((m = regex.exec(this.text)) !== null) {
         // This is necessary to avoid infinite loops with zero-width matches
         if (m.index === regex.lastIndex) {
           regex.lastIndex++;
