@@ -13,6 +13,8 @@
     </v-footer>-->
 
     <GoUpButton />
+
+    <SnackBar />
   </v-app>
 </template>
 
@@ -20,6 +22,7 @@
 import Navbar from "@/layouts/Navbar";
 //import Footer from "@/layouts/Footer";
 import GoUpButton from "@/layouts/GoUpButton";
+import SnackBar from "@/layouts/SnackBar";
 import { mapActions, mapState } from "vuex";
 
 export default {
@@ -28,12 +31,18 @@ export default {
     Navbar,
     //Footer,
     GoUpButton,
+    SnackBar,
   },
   computed: {
-    ...mapState(["words"]),
+    ...mapState(["words", "error"]),
   },
   methods: {
-    ...mapActions(["bindWordsRef", "unbindWordsRef", "loadWords"]),
+    ...mapActions([
+      "bindWordsRef",
+      "unbindWordsRef",
+      "loadWords",
+      "dismissError",
+    ]),
   },
   created() {
     this.bindWordsRef();
@@ -69,5 +78,9 @@ label.theme--dark.v-label {
 
 .v-text-field.v-input--dense:not(.v-text-field--outlined) input {
   padding: 4px 0 4px !important;
+}
+
+.v-snack__wrapper {
+  max-width: 400px !important;
 }
 </style>

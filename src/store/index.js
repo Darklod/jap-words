@@ -22,7 +22,8 @@ export default new Vuex.Store({
         field: 'createdAt',
         mode: 'desc',
       }
-    }
+    },
+    error: "",
   },
   mutations: {
     ...vuexfireMutations,
@@ -42,7 +43,9 @@ export default new Vuex.Store({
     orderWords(state) {
       const words = [...state.filteredWords]
       state.filteredWords = Filters.orderWords(state.filter.order, words)
-    }
+    },
+
+    setError(state, error) { state.error = error },
   },
   actions: {
     bindWordsRef: firestoreAction(({ bindFirestoreRef }) => {
@@ -51,52 +54,55 @@ export default new Vuex.Store({
     unbindWordsRef: firestoreAction(({ bindFirestoreRef }) => {
       bindFirestoreRef('words')
     }),
-    loadWords: ({ commit }, payload) => {
-      commit('setWords', payload)
-      commit('setFilteredWords', payload)
+    loadWords: async ({ commit }, payload) => {
+      await commit('setWords', payload)
+      await commit('setFilteredWords', payload)
     },
     addWord: firestoreAction((context, payload) => {
       payload.createdAt = Timestamp.now()
       wordCollection.add(payload)
-        .catch(err => console.error(err)) // commit error
+        .catch(err => context.commit('setError', err.toString()))
     }),
     updateWord: firestoreAction((context, payload) => {
       payload.updatedAt = Timestamp.now()
       wordCollection.doc(payload.id).set(payload.data)
-        .catch(err => console.error(err))
+        .catch(err => context.commit('setError', err.toString()))
     }),
     deleteWord: firestoreAction((context, payload) => {
       wordCollection.doc(payload.id).delete()
-        .catch(err => console.error(err))
+        .catch(err => context.commit('setError', err.toString()))
     }),
     // Si potrebbe usare updateWord...
     setPhrases: firestoreAction((context, payload) => {
       wordCollection.doc(payload.id).set({ phrases: payload })
-        .catch(err => console.error(err))
+        .catch(err => context.commit('setError', err.toString()))
     }),
-    // ...
 
     // Filter and Sort
-    async filterOrder({ commit }, order) {
+    filterOrder: async ({ commit }, order) => {
       await commit('setOrder', order)
       await commit('orderWords')
     },
-    async filterSearch({ commit, dispatch }, search) {
+    filterSearch: async ({ commit, dispatch }, search) => {
       await commit('setFilterSearch', search)
       dispatch('filterWords')
     },
-    async filterFamiliarity({ commit, dispatch }, status) {
+    filterFamiliarity: async ({ commit, dispatch }, status) => {
       await commit('setFilterFamiliarity', status)
       dispatch('filterWords')
     },
-    async filterJLPT({ commit, dispatch }, status) {
+    filterJLPT: async ({ commit, dispatch }, status) => {
       await commit('setFilterJLPT', status)
       dispatch('filterWords')
     },
-    async filterWords({ commit }) {
+    filterWords: async ({ commit }) => {
       await commit('filterWords')
       await commit('orderWords')
     },
+
+    dismissError: async ({ commit }) => {
+      await commit('setError', "")
+    }
   },
   getters: {
     wordsWithoutPhrases: state => state.filteredWords.filter(w => !w.phrases),
