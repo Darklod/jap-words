@@ -16,7 +16,7 @@
         v-model="jlpt"
         active-class="red white--text"
         class="pt-0"
-        multiple
+        :multiple="ctrlActive"
         @change="handleJLPTFilter"
       >
         <v-chip class="rounded-lg">N5</v-chip>
@@ -37,7 +37,8 @@ export default {
   name: "FilterSection",
   data: () => ({
     familiarity: undefined,
-    jlpt: [],
+    jlpt: undefined,
+    ctrlActive: false,
   }),
   methods: {
     ...mapActions(["filterFamiliarity", "filterJLPT"]),
@@ -50,16 +51,36 @@ export default {
       this.resetPages();
     },
     handleJLPTFilter() {
-      if (this.jlpt && this.jlpt.length === 0) {
+      if (this.jlpt === undefined || (this.jlpt && this.jlpt.length === 0)) {
         this.filterJLPT("all");
       } else {
-        this.filterJLPT(this.jlpt.map((x) => 5 - x));
+        if (Array.isArray(this.jlpt)) {
+          this.filterJLPT([...this.jlpt].map((x) => 5 - x));
+        } else {
+          this.filterJLPT(5 - this.jlpt);
+        }
       }
       this.resetPages();
     },
     resetPages() {
       EventBus.$emit("resetPages");
     },
+  },
+  created() {
+    window.addEventListener("keyup", (e) => {
+      if (e.key === "Control") {
+        this.ctrlActive = false;
+      }
+    });
+
+    window.addEventListener("keydown", (e) => {
+      if (e.key === "Control") {
+        if (!Array.isArray(this.jlpt)) {
+          this.jlpt = [this.jlpt];
+        }
+        this.ctrlActive = true;
+      }
+    });
   },
 };
 </script>

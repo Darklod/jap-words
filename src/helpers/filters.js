@@ -19,7 +19,7 @@ export function filterWords(filter, words) {
         if (Array.isArray(filter.jlpt))
             filterMethod = w => filter.jlpt.includes(w.jlpt)
         else
-            filterMethod = w => w.jlpt === filter.jlpt
+            filterMethod = w => w.jlpt == filter.jlpt
 
         const filtered = filteredList.filter(filterMethod)
         filteredList = filtered
