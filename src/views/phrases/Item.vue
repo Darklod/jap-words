@@ -2,7 +2,7 @@
   <div>
     <div @contextmenu="show">
       <v-card-title class="headline pb-0">
-        <Header :word="word" />
+        <FuriganaText :word="word" />
       </v-card-title>
 
       <v-sheet class="d-flex ml-4 my-2" :color="familiarityColor" width="60" height="4" />
@@ -37,13 +37,13 @@
 
 <script>
 import Phrase from "@/views/phrases/Phrase"
-import Header from "@/components/Header"
+import FuriganaText from "@/components/FuriganaText"
 
 export default {
   props: ["word", "isLast"],
   components: {
     Phrase,
-    Header,
+    FuriganaText,
   },
   data() {
     return {

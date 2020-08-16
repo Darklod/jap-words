@@ -6,18 +6,24 @@
     colored-border
     :color="familiarityColor"
   >
-    <v-card-title class="headline pa-0">
-      <Header :word="word" />
-    </v-card-title>
+    <div class="d-flex justify-space-between align-center">
+      <div class="word">
+        <FuriganaText :word="word" class="d-inline-block" />
+        <ruby>
+          <rb>・{{word.translation}}</rb>
+        </ruby>
+      </div>
+      <v-chip class="rounded-lg font-weight-medium" text-color="white" color="accent">N{{word.jlpt}}</v-chip>
+    </div>
   </v-alert>
 </template>
 
 <script>
-import Header from "@/components/Header";
+import FuriganaText from "@/components/FuriganaText";
 
 export default {
-  props: ["word", "isLast"],
-  components: { Header },
+  props: ["word"],
+  components: { FuriganaText },
   computed: {
     familiarityColor() {
       switch (this.word.familiarity) {
@@ -33,3 +39,11 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.word {
+  font-weight: 400;
+  font-size: 1.5rem;
+  line-height: 2rem;
+}
+</style>
