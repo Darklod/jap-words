@@ -1,21 +1,35 @@
 <template>
-  <v-alert
+  <div class="item-container">
+    <v-alert
     class="rounded-lg pl-6"
     elevation="4"
     border="left"
     colored-border
     :color="familiarityColor"
-  >
-    <div class="d-flex justify-space-between align-center">
-      <div class="word">
-        <FuriganaText :text="word.text" class="d-inline-block" />
-        <ruby>
-          <rb>・{{word.translation}}</rb>
-        </ruby>
+    @click="showOptions"
+    >
+      <div class="d-flex justify-space-between align-center">
+        <div class="word">
+          <FuriganaText :text="word.text" class="d-inline-block" />
+          <ruby>
+            <rb>・{{word.translation}}</rb>
+          </ruby>
+        </div>
+        <v-chip class="rounded-lg font-weight-medium" text-color="white" color="teal">N{{word.jlpt}}</v-chip>
       </div>
-      <v-chip class="rounded-lg font-weight-medium" text-color="white" color="accent">N{{word.jlpt}}</v-chip>
+    </v-alert>
+
+    <div class="wrap item-options" v-if="show">
+        <v-btn class="rounded-lg" fab x-small dark small color="orange">
+          <v-icon>mdi-pencil</v-icon>
+        </v-btn>
+      
+        <v-btn class="mt-1 rounded-lg" fab x-small dark small color="red">
+          <v-icon>mdi-delete</v-icon>
+        </v-btn>
     </div>
-  </v-alert>
+
+  </div>
 </template>
 
 <script>
@@ -24,6 +38,11 @@ import FuriganaText from "@/components/FuriganaText";
 export default {
   props: ["word"],
   components: { FuriganaText },
+  data() {
+    return {
+      show: false
+    };
+  },
   computed: {
     familiarityColor() {
       switch (this.word.familiarity) {
@@ -35,8 +54,13 @@ export default {
         default:
           return "#92d050";
       }
-    },
+    }
   },
+  methods: {
+    showOptions() {
+      this.show = !this.show
+    }
+  }
 };
 </script>
 
@@ -46,4 +70,24 @@ export default {
   font-size: 1.5rem;
   line-height: 2rem;
 }
+
+.item-container {
+  position: relative;
+}
+
+.item-options {
+  width: 50px;
+  height: 100%;
+  position: absolute;
+  right: -60px; /*60 + padding*/
+  top:0px;
+}
+
+.wrap {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
 </style>

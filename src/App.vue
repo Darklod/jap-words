@@ -83,4 +83,5 @@ label.theme--dark.v-label {
 .v-snack__wrapper {
   max-width: 400px !important;
 }
+
 </style>
