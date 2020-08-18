@@ -1,3 +1,5 @@
+// https://www.supermemo.com/en/archives1990-2015/english/ol/sm2
+
 export function newIteration(EF, q, interval, streak) {
     let newEF = EF - 0.8 + 0.28 * q - 0.02 * q * q
 
@@ -24,21 +26,30 @@ export function newIteration(EF, q, interval, streak) {
     }
 }
 
+import moment from 'moment'
+
 export function updateReview(oldReview) {
     let { EF, q, interval, streak, last_review } = oldReview;
     let iter = newIteration(EF, q, interval, streak)
     return {
         ...iter,
-        last_review: new Date(Date.now()),
-        next_review: new Date(last_review + (iter.interval * 86400000))
+        last_review: moment().startOf("day").toDate(),
+        next_review: moment(last_review).add(iter.interval, 'days').toDate()
     }
 }
 
+// 5 - perfect response
+// 4 - correct response after a hesitation
+// 3 - correct response recalled with serious difficulty
+// 2 - incorrect response; where the correct one seemed easy to recall
+// 1 - incorrect response; the correct one remembered
+// 0 - complete blackout.
+
 // Test
-let old = { EF: 2.5, interval: 0, streak: 1, last_review: Date.now() };
-console.log(old)
-for (let i = 1; i < 25; i++) {
-    let q = Math.round(Math.random() * 5)
-    old = updateReview(old.EF, q, old.interval, old.streak, old.last_review)
-    console.log(q, old)
-}
+// let old = { EF: 2.5, interval: 0, streak: 1, last_review: Date.now() };
+// console.log(old)
+// for (let i = 1; i < 25; i++) {
+//     let q = Math.round(Math.random() * 5)
+//     old = updateReview(old.EF, q, old.interval, old.streak, old.last_review)
+//     console.log(q, old)
+// }

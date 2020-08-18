@@ -13,7 +13,7 @@ import { mapActions, mapState } from "vuex";
 export default {
   name: "SnackBar",
   computed: {
-    ...mapState(["error"]),
+    ...mapState({ error: (state) => state.words.error }),
   },
   methods: {
     ...mapActions(["dismissError"]),

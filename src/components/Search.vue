@@ -19,7 +19,7 @@ import { mapState, mapActions } from "vuex";
 
 export default {
   computed: {
-    ...mapState({ search: (state) => state.filter.search }),
+    ...mapState({ search: (state) => state.words.filter.search }),
   },
   methods: {
     ...mapActions(["filterSearch"]),

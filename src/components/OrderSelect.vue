@@ -31,7 +31,7 @@ export default {
     };
   },
   computed: {
-    ...mapState({ order: (state) => state.filter.order }),
+    ...mapState({ order: (state) => state.words.filter.order }),
     orderTitles() {
       return Object.keys(this.orders);
     },

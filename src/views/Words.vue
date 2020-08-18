@@ -2,7 +2,7 @@
   <div id="container">
     <SearchSection />
     <FilterSection />
-    <WordList :words="words" />
+    <WordList :words="filteredWords" />
   </div>
 </template>
 
@@ -11,7 +11,7 @@ import SearchSection from "@/components/SearchSection";
 import FilterSection from "@/components/FilterSection";
 import WordList from "@/views/words/WordList";
 
-import { mapState, mapActions } from 'vuex'
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   components: {
@@ -20,13 +20,24 @@ export default {
     WordList,
   },
   computed: {
-    ...mapState({ words: (state) => state.filteredWords }),
+    ...mapGetters([
+      'words',
+      'filteredWords',
+    ]),
   },
   methods: {
-    ...mapActions(["resetFilters"])
+    ...mapActions([
+      "bindWordsRef",
+      "unbindWordsRef",
+      "loadWords",
+    ]),
   },
   mounted() {
-    this.resetFilters();
+    this.bindWordsRef();
+    this.loadWords(this.words);
+  },
+  beforeDestroy() {
+    this.unbindWordsRef();
   },
 };
 </script>

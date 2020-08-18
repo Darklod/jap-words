@@ -17,7 +17,7 @@
         </div>
         <v-chip class="rounded-lg font-weight-medium" text-color="white" color="teal">N{{word.jlpt}}</v-chip>
       </div>
-      
+
       <div v-if="showPhrases && word.phrases && word.phrases.length > 0">
         <v-sheet class="d-flex my-2" color="blue-grey darken-3" width="50" height="3" />
 
@@ -48,10 +48,14 @@
 <script>
 import FuriganaText from "@/components/FuriganaText";
 import Phrase from "@/views/phrases/Phrase";
+import { mapActions } from "vuex";
 
 export default {
   props: ["word", "showPhrases"],
   components: { FuriganaText, Phrase },
+  data: () => ({
+    show: false,
+  }),
   computed: {
     familiarityColor() {
       switch (this.word.familiarity) {
@@ -68,7 +72,40 @@ export default {
   methods: {
     showOptions() {
       this.show = !this.show;
+
+      let word = {
+        text: "相(そう)_談(だん)",
+        translation: "Consultazione",
+        jlpt: 3,
+        familiarity: 1,
+        phrases: [
+          {
+            text: "弁護士と相談したらどうですか",
+            translation: "Perché non ti consulti con un avvocato?",
+          },
+          {
+            text: "決める前に家族と相談したいのですが。",
+            translation: "Prima di decidere, voglio consultarmi con la mia famiglia.",
+          },
+        ],
+        reviews: {
+          meaning: {
+            EF: 2.5,
+            streak: 1,
+            interval: 0,
+          },
+          reading: {
+            EF: 2.5,
+            streak: 1,
+            interval: 0,
+          }
+        }
+      };
+      console.log(word)
+
+      // this.addWord(word);
     },
+    ...mapActions(["addWord", "updateWord"]),
   },
 };
 </script>

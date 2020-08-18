@@ -24,6 +24,11 @@ const routes = [
     name: 'About',
     component: () => import('../views/About.vue')
   },
+  {
+    path: '/reviews',
+    name: 'Reviews',
+    component: () => import('../views/Reviews.vue')
+  },
   // {
   //   path: '*',
   //   redirect: '/404'

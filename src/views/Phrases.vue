@@ -19,13 +19,21 @@ export default {
     WordList,
   },
   computed: {
-    ...mapGetters(["wordsWithPhrases"]),
+    ...mapGetters(["wordsWithPhrases", "words", "filteredWords"]),
   },
   methods: {
-    ...mapActions(["resetFilters"])
+    ...mapActions([
+      "bindWordsRef",
+      "unbindWordsRef",
+      "loadWords",
+    ]),
   },
   mounted() {
-    this.resetFilters();
+    this.bindWordsRef();
+    this.loadWords(this.words);
+  },
+  beforeDestroy() {
+    this.unbindWordsRef();
   },
 };
 </script>

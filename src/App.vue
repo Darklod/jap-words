@@ -34,7 +34,7 @@ export default {
     SnackBar,
   },
   computed: {
-    ...mapState(["words", "error"]),
+    ...mapState({ error: state => state.words.error }),
   },
   methods: {
     ...mapActions([
@@ -44,13 +44,13 @@ export default {
       "dismissError",
     ]),
   },
-  created() {
-    this.bindWordsRef();
-    this.loadWords(this.words);
-  },
-  beforeDestroy() {
-    this.unbindWordsRef();
-  },
+  // created() {
+  //   this.bindWordsRef();
+  //   //this.loadWords(this.words);
+  // },
+  // beforeDestroy() {
+  //   this.unbindWordsRef();
+  // },
 };
 </script>
 
