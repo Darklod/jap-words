@@ -14,7 +14,7 @@
     <v-col cols="auto">
       <v-chip-group
         v-model="jlpt"
-        active-class="red white--text"
+        active-class="accent white--text"
         class="pt-0"
         :multiple="ctrlActive"
         @change="handleJLPTFilter"
