@@ -15,15 +15,30 @@
       </div>
       <v-chip class="rounded-lg font-weight-medium" text-color="white" color="accent">N{{word.jlpt}}</v-chip>
     </div>
+
+    <div v-if="showPhrases && word.phrases && word.phrases.length > 0">
+      <v-sheet class="d-flex my-2" color="blue-grey darken-3" width="50" height="3" />
+
+      <div>
+        <Phrase
+          v-for="(p, index) in word.phrases"
+          :key="`p-${index}`"
+          :text="p.text"
+          :translation="p.translation"
+          class="text-body-2"
+        />
+      </div>
+    </div>
   </v-alert>
 </template>
 
 <script>
 import FuriganaText from "@/components/FuriganaText";
+import Phrase from "@/views/phrases/Phrase";
 
 export default {
-  props: ["word"],
-  components: { FuriganaText },
+  props: ["word", "showPhrases"],
+  components: { FuriganaText, Phrase },
   computed: {
     familiarityColor() {
       switch (this.word.familiarity) {

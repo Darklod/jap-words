@@ -6,7 +6,7 @@
       </v-layout>
     </v-container>
 
-    <WordItem v-for="word in wordsPaginated" :key="word.id" :word="word" />
+    <WordItem v-for="word in wordsPaginated" :key="word.id" :word="word" :showPhrases="phrases" />
 
     <div class="text-center">
       <v-pagination v-model="page" total-visible="6" :length="pages"></v-pagination>
@@ -17,10 +17,10 @@
 <script>
 import WordItem from "@/views/words/WordItem";
 import { EventBus } from "@/event-bus.js";
-import { mapState } from "vuex";
 
 export default {
   name: "WordList",
+  props: ["words", "phrases"],
   components: {
     WordItem,
   },
@@ -31,7 +31,6 @@ export default {
     };
   },
   computed: {
-    ...mapState({ words: (state) => state.filteredWords }),
     wordsPaginated() {
       let start = (this.page - 1) * this.wordsForPage;
       return this.words.slice(start, start + this.wordsForPage);

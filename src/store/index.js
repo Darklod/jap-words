@@ -5,24 +5,27 @@ import { firestoreAction } from 'vuexfire'
 
 import { db, Timestamp } from '../db'
 import * as Filters from '../helpers/filters'
+import * as SM2 from '../helpers/sm2'
 
 const wordCollection = db.collection('words')
 
 Vue.use(Vuex)
 
+let initialFilterState = {
+  search: '',
+  familiarity: 'all',
+  jlpt: 'all',
+  order: {
+    field: 'createdAt',
+    mode: 'desc',
+  }
+}
+
 export default new Vuex.Store({
   state: {
     words: [],
     filteredWords: [],
-    filter: {
-      search: '',
-      familiarity: 'all',
-      jlpt: 'all',
-      order: {
-        field: 'createdAt',
-        mode: 'desc',
-      }
-    },
+    filter: { ...initialFilterState },
     error: "",
   },
   mutations: {
@@ -44,6 +47,8 @@ export default new Vuex.Store({
       const words = [...state.filteredWords]
       state.filteredWords = Filters.orderWords(state.filter.order, words)
     },
+
+    resetFilters(state) { state.filter = { ...initialFilterState } },
 
     setError(state, error) { state.error = error },
   },
@@ -74,9 +79,20 @@ export default new Vuex.Store({
     }),
     // Si potrebbe usare updateWord...
     setPhrases: firestoreAction((context, payload) => {
-      wordCollection.doc(payload.id).set({ phrases: payload })
+      wordCollection.doc(payload.id).set({ phrases: payload.phrases })
         .catch(err => context.commit('setError', err.toString()))
     }),
+
+    // Reviews
+    updateReview: firestoreAction((context, payload) => {
+      let review = SM2.updateReview(payload.review)
+      review.last_review = Timestamp.fromDate(review.last_review)
+      review.next_review = Timestamp.fromDate(review.next_review)
+      
+      wordCollection.doc(payload.id).set({ [payload.type]: review })
+        .catch(err => context.commit('setError', err.toString()))
+    }),
+
 
     // Filter and Sort
     filterOrder: async ({ commit }, order) => {
@@ -98,6 +114,9 @@ export default new Vuex.Store({
     filterWords: async ({ commit }) => {
       await commit('filterWords')
       await commit('orderWords')
+    },
+    resetFilters: async ({ commit }) => {
+      await commit('resetFilters');
     },
 
     dismissError: async ({ commit }) => {

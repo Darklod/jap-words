@@ -1,8 +1,8 @@
 <template>
-  <div id="words">
+  <div id="container">
     <SearchSection />
     <FilterSection />
-    <WordList />
+    <WordList :words="words" />
   </div>
 </template>
 
@@ -11,18 +11,22 @@ import SearchSection from "@/components/SearchSection";
 import FilterSection from "@/components/FilterSection";
 import WordList from "@/views/words/WordList";
 
+import { mapState, mapActions } from 'vuex'
+
 export default {
   components: {
     SearchSection,
     FilterSection,
     WordList,
   },
+  computed: {
+    ...mapState({ words: (state) => state.filteredWords }),
+  },
+  methods: {
+    ...mapActions(["resetFilters"])
+  },
+  mounted() {
+    this.resetFilters();
+  },
 };
 </script>
-
-<style scoped>
-#words {
-  max-width: 600px;
-  margin:auto;
-}
-</style>

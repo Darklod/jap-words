@@ -68,6 +68,11 @@ main {
   background-blend-mode: difference;
 }
 
+#container {
+  max-width: 600px;
+  margin:auto;
+}
+
 label.theme--dark.v-label {
   color: rgb(255 255 255 / 0.95);
 }
